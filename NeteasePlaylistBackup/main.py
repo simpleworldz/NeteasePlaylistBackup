@@ -37,8 +37,8 @@ if __name__ == "__main__":
     #只给了-b 没有参数内容呢？
     
     parse.add_argument("-b","--backup",action="store_true",required=False,help="backup playlist")
-    parse.add_argument("-c1","--compare1",type=str,required=False,help="need compare npy file 1")
-    parse.add_argument("-c2","--compare2",type=str,required=False,help="need compare npy file 2 if not, default queue in netease directory")
+    parse.add_argument("-c1","--compare1",type=str,required=False,help="need compare playlist (.npy file) 1")
+    parse.add_argument("-c2","--compare2",type=str,required=False,help="need compare playlist (.npy file) 2 if not, use default platlist in netease directory")
     args = parse.parse_args()
     if args.backup:
         backup(backup_name)

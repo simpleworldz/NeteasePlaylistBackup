@@ -31,6 +31,7 @@ def backup(backup_name):
     """将music_list写入文件(backup)"""
     music_list = gain_music_list(backup_name)
     np.save(backup_save_name,music_list)
+    print("备份成功！ 文件名： " + backup_save_name + ".npy")
 
 def read_file_in_line():
     """已行读取文件"""
