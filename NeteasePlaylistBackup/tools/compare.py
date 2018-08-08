@@ -1,9 +1,4 @@
-#backup报错 tools.backup 才行  这是在code的输出中执行的情况
-#而在powershell 中要用backup  
-#路径问题  有些智障  怎样解决呢？
-
-#不同的文件执行就是不通过的路径     ？？？？？？？？？？？？
-from tools.backup import gain_music_list
+from .backup import gain_music_list
 import numpy as np 
 
 '''还是用默认参数的方法吧'''
