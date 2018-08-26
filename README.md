@@ -1,6 +1,7 @@
 # NeteasePlaylistBackup
 网易云播放列表备份和对比，支持超过1000首。  
-  
+
+[NeteasePlaylistBackup(regex)]
 **usage: main.py [-h] [-b] [-c1 COMPARE1] [-c2 COMPARE2]**  
   
 optional arguments:  
