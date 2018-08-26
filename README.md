@@ -1,5 +1,5 @@
 # NeteasePlaylistBackup
-网易云播放列表备份和对比，支持超过1000首。  
+网易云播放列表信息备份和检测增删（以文字形式），支持超过1000首。  
 
 [NeteasePlaylistBackup(json)]  
 **use -b backup;use -c1 -c2 detect change**
