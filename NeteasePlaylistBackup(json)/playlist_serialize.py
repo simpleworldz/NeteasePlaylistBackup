@@ -7,7 +7,7 @@ PATH_PLAYLIST = os.environ["localappdata"]+"/Netease/CloudMusic/webdata/file/que
 
 def backup_queue(path):
     f = open(path,mode="r",encoding="UTF-8")
-    data = f.read().encode("gbk","ignore").decode("gbk")
+    data = f.read()#.encode("gbk","ignore").decode("gbk")
     data_dese = json.loads(data)   
     playlist_dic = {}
     index = 1
@@ -18,21 +18,25 @@ def backup_queue(path):
         album_name = track["album"]["name"]
         artists = ""
         for artist in track["artists"]:
-            artists += artist["name"] +"/"
+            artists += artist["name"] +","
         artists = artists[:-1]
         # playlist_dic[track["id"]] = track["name"]
         '''{0}对其后面再改进吧'''
-        playlist_dic[track["id"]] = "index:{3:<8}name:{0}\talbum:{1}\tartists:{2}".format(name,album_name,artists,index)
+        # playlist_dic[track["id"]] = "index:{3:<8}name:{0}\talbum:{1}\tartists:{2}".format(name,album_name,artists,index)
+        music = dict(index=index, name=name, album=album_name, artists=artists)
+        playlist_dic[track["id"]] = music
         index += 1 
     print("playlist含{0}首歌".format(len(playlist_dic)))
-    dumped_playlist_dic = json.dumps(playlist_dic)
+    # 问题在这
+    dumped_playlist_dic = json.dumps(playlist_dic,ensure_ascii=False)
     backup_save_name = "bk"+time.strftime("%Y%m%d%H%M%S",time.localtime())
-    save_dic = open(backup_save_name,"w")
+    # print(dumped_playlist_dic)
+    save_dic = open(backup_save_name,"w",encoding="UTF-8")
     save_dic.write(dumped_playlist_dic)
     save_dic.close()
 
 def read_dic(path):
-    f = open(path)
+    f = open(path,encoding="UTF-8")
     return json.load(f)
 
 def detect_change(path1,path2):
@@ -47,17 +51,25 @@ def detect_change(path1,path2):
     # print(remove)
     # print(add)
     change_save_name = "cg"+time.strftime("%Y%m%d%H%M%S",time.localtime())
-    with open(change_save_name,"a") as a:
-        a.write("remove:{0}\tadd:{1}\n".format(len(remove),len(add)))
-        a.write("remove:\n")
+    with open(change_save_name,"w",encoding="UTF-8") as a:
+        cg = {}
+        cg["remove_num"] = len(remove)
+        cg["add_num"] = len(add)
+        cg_remove = {}
+        cg_add = {}
         for key in remove:
             # a.write("id:{0:<10}\tname:{1}\n".format(key,playlist_dic1[key]))
             #print("id:{0}\tname:{1}\n".format(key,playlist_dic1[key]))
-            a.write("id:{0:<10}\t{1}\n".format(key,playlist_dic1[key]))
-        a.write("add:\n")
+            # a.write("id:{0:<10}\t{1}\n".format(key,playlist_dic1[key]))
+            cg_remove[key] = playlist_dic1[key]
         for key in add:
             # a.write("id:{0:<10}\tname:{1}\n".format(key,playlist_dic2[key]))
-            a.write("id:{0:<10}\t{1}\n".format(key,playlist_dic2[key]))
+            # a.write("id:{0:<10}\t{1}\n".format(key,playlist_dic2[key]))
+            cg_add[key] = playlist_dic2[key]
+        cg["remove"] = cg_remove
+        cg["add"] = cg_add
+        cg_dump = json.dumps(cg,ensure_ascii=False)
+        a.write(cg_dump)
     print("change save in: "+change_save_name)
 
 if __name__ == "__main__":
