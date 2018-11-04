@@ -1,7 +1,13 @@
 # NeteasePlaylistBackup
-网易云播放列表信息备份和检测增删（以文字形式），支持超过1000首。  
-
-[NeteasePlaylistBackup(json)]  
+仅适用于**windows**（小程序中播放列表路径是windows的）    
+网易云播放列表    
+* 歌曲备份（以文字形式）  
+* 检测增删  
+* 支持超过1000首。  
+  
+打开网易云客户端，进入需要备份的歌单，点击播放全部，歌曲进入播放列表，即可备份歌单。  
+  
+[NeteasePlaylistBackup(json)]（推荐使用json版）  
 **use -b backup;use -c1 -c2 detect change**
 
 optional arguments:  
